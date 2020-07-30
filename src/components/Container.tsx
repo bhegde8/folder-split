@@ -3,24 +3,18 @@ import React, { ReactElement } from 'react';
 
 // Material UI
 import { Grid } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 // Components
-import Disks from './Disks'
-import Files from './Files'
-import Folder from './Folder'
+import Disks from './Disks';
+import Folder from './FolderChoose';
+import SplitFiles from './SplitFiles';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
             flexGrow: 1,
             marginTop: '3em',
-        },
-        paper: {
-            padding: theme.spacing(2),
-        },
-        textRight: {
-            textAlign: "right",
         },
     }),
 );
@@ -38,7 +32,7 @@ export default (): ReactElement => {
                     <Disks />
                 </Grid>
                 <Grid item xs={12}>
-                    <Files />
+                    <SplitFiles />
                 </Grid>
             </Grid>
         </div>

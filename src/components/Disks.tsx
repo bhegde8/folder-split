@@ -5,7 +5,7 @@ import React, { ReactElement } from 'react';
 import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 
 // Components
-import DiskInfo from './DiskInfo'
+import DiskInfo from './DiskInfo';
 
 export default (): ReactElement => {
     
@@ -27,7 +27,7 @@ export default (): ReactElement => {
                             freeSpace: 6.41,
                             totalSpace: 59.6,
                         }].map((driveData) => (
-                            <Grid item xs={3}>
+                            <Grid item xs={2}>
                                 <DiskInfo
                                     driveLabel={driveData.driveLabel}
                                     freeSpace={driveData.freeSpace}

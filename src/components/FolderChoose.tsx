@@ -4,15 +4,19 @@ import React, { ReactElement } from 'react';
 // Material UI
 import { Card, CardContent, Button, Grid, Paper,
          Typography } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-import FolderIcon from '@material-ui/icons/Folder'
+import FolderIcon from '@material-ui/icons/Folder';
 
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
+        button: {
+            width: '100%',
+        },
         paper: {
             padding: theme.spacing(2),
+            backgroundColor: theme.palette.background.default,
         },
         textRight: {
             textAlign: "right",
@@ -38,6 +42,7 @@ export default (): ReactElement => {
                         </Grid>
                         <Grid item className={classes.textRight} xs={3}>
                             <Button
+                                className={classes.button}
                                 variant="contained"
                                 color="primary"
                                 startIcon={<FolderIcon />}
