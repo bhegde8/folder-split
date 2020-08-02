@@ -1,5 +1,8 @@
+// Electron
+import { remote } from 'electron'
+
 // React
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 // Material UI
 import { Card, CardContent, Button, Grid, Paper,
@@ -26,7 +29,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default (): ReactElement => {
     const classes = useStyles();
-    
+    const [folder, setFolder] = useState('(No Folder Selected)');
+
+    const openFolderDialog = async () => {
+        const result = await remote.dialog.showOpenDialog({
+            properties: ['openDirectory']
+        });
+
+        if (!result.canceled) {
+            setFolder(result.filePaths[0]);
+        }
+    }
+
     return (
         <Card>
             <CardContent>
@@ -37,7 +51,7 @@ export default (): ReactElement => {
                     <Grid container spacing={1}>
                         <Grid item xs={9}>
                             <Typography variant="h6" component="h6">
-                                D:\SteamLibrary\steamapps\common\Halo The Master Chief Collection
+                                {folder}
                             </Typography>
                         </Grid>
                         <Grid item className={classes.textRight} xs={3}>
@@ -46,6 +60,7 @@ export default (): ReactElement => {
                                 variant="contained"
                                 color="primary"
                                 startIcon={<FolderIcon />}
+                                onClick={() => openFolderDialog()}
                             >
                                 Choose Folder...
                             </Button>
