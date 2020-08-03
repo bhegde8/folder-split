@@ -1,5 +1,5 @@
 // React
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 
 // Material UI
 import { Card, CardContent, Grid, Typography } from '@material-ui/core';
@@ -7,8 +7,21 @@ import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 // Components
 import DiskInfo from './DiskInfo';
 
+// System
+import DiskManager, { DiskData } from '../system/diskmanager'
+import _ from 'lodash';
+
 export default (): ReactElement => {
-    
+    const [diskData, setDiskData] = useState([]);
+
+    useEffect(() => {
+        const update = async () => {
+            setDiskData(await DiskManager.getDiskData());
+        };
+
+        update();
+    }, [])
+
     return (
         <Card>
             <CardContent>
@@ -17,22 +30,9 @@ export default (): ReactElement => {
                 </Typography>
                 <Grid container spacing={1}>
                     {
-                        [{
-                            driveLabel: 'C:',
-                            freeSpace: 40.0,
-                            totalSpace: 237,
-                        },
-                        {
-                            driveLabel: 'D:',
-                            freeSpace: 6.41,
-                            totalSpace: 59.6,
-                        }].map((driveData) => (
+                        _.map(diskData, (disk) => (
                             <Grid item xs={2}>
-                                <DiskInfo
-                                    driveLabel={driveData.driveLabel}
-                                    freeSpace={driveData.freeSpace}
-                                    totalSpace={driveData.totalSpace}
-                                />
+                                <DiskInfo {...disk} />
                             </Grid>
                         ))
                     }
