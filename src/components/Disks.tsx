@@ -16,7 +16,7 @@ import DiskInfo from './DiskInfo';
 import _ from 'lodash';
 
 
-export default (): ReactElement => {
+const Disks = (): ReactElement => {
     const disks = useSelector(selectDisks);
     const dispatch = useAppDispatch();
 
@@ -45,3 +45,7 @@ export default (): ReactElement => {
         </Card>
     );
 };
+
+Disks.displayName = 'Disks';
+
+export default Disks;

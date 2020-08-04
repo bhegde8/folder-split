@@ -15,7 +15,7 @@ export default store;
 export type RootState = ReturnType<typeof store.getState>;
 
 // Used for typed thunks for asynchronous actions
-export type AppThunk = ThunkAction<void, RootState, null, Action<string>>
+export type AppThunk = ThunkAction<void, RootState, null, Action<string>>;
 
 // Used for typed dispatch()es
 export type AppDispatch = typeof store.dispatch;

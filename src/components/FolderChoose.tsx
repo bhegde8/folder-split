@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default (): ReactElement => {
+const FolderChoose = (): ReactElement => {
     const classes = useStyles();
     const [folder, setFolder] = useState('(No Folder Selected)');
 
@@ -71,3 +71,7 @@ export default (): ReactElement => {
         </Card>
     );
 };
+
+FolderChoose.displayName = 'FolderChoose';
+
+export default FolderChoose;

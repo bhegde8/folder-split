@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default (): ReactElement => {
+const SplitFiles = (): ReactElement => {
     const classes = useStyles();
 
     return (
@@ -65,7 +65,7 @@ export default (): ReactElement => {
                 <Grid container spacing={1}>
                     {
                         ['C:', 'D:'].map((driveLabel) => (
-                            <Grid item xs={4}>
+                            <Grid item key={driveLabel} xs={4}>
                                 <FileTransfer driveLabel={driveLabel} />
                             </Grid>
                         ))
@@ -75,3 +75,7 @@ export default (): ReactElement => {
         </Card>
     );
 };
+
+SplitFiles.displayName = 'SplitFiles';
+
+export default SplitFiles;

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default (props: Props): ReactElement => {
+const FileTransfer = (props: Props): ReactElement => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -107,3 +107,7 @@ export default (props: Props): ReactElement => {
         </List>
     );
 };
+
+FileTransfer.displayName = 'FileTransfer';
+
+export default FileTransfer;
