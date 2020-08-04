@@ -8,7 +8,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import StorageIcon from '@material-ui/icons/Storage';
 
 // System
-import { DiskData } from '../system/diskmanager'
+import { DiskData } from '../system/diskManager'
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -40,7 +40,7 @@ export default (props: DiskData): ReactElement => {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography variant="body1" component="p">
-                        {props.free} / {props.total} GB Free
+                        {props.free} / {props.total} GiB Free
                     </Typography>
                 </Grid>
             </Grid>

@@ -1,7 +1,10 @@
-import diskInfo from 'node-disk-info';
 import diskusage from 'diskusage';
 import _ from 'lodash';
 
+/**
+ * Models properties of a disk (mount label,
+ * free space, total space, and usage %)
+ */
 export type DiskData = {
     label: string;
     free: number;
@@ -9,12 +12,25 @@ export type DiskData = {
     usage: number;
 };
 
+/**
+ * Manages the retrieval of disk information
+ */
 export default abstract class DiskManager {
     private static diskData: DiskData[] = [];
 
+    /**
+     * Goes through all the mounted disks 
+     * and calculates the disk usage for each one.
+     */
     public static calcDiskData = async () => {
         // Get a list of drives mounted on the system
-        const drives = await diskInfo.getDiskInfo();
+        // TODO: use a different module to get the disks instead of hardcoded
+        // drives
+        const drives = [{
+            mounted: 'C:',
+        }, {
+            mounted: 'D:',
+        }]
 
         DiskManager.diskData = [];
 
@@ -26,8 +42,8 @@ export default abstract class DiskManager {
             // Add the data to the diskData array
             DiskManager.diskData.push({
                 label: drive.mounted,
-                free: bytesToGB(data.available),
-                total: bytesToGB(data.total),
+                free: bytesToGiB(data.available),
+                total: bytesToGiB(data.total),
                 usage: (data.available / data.total) * 100,
             });
         });
@@ -35,6 +51,10 @@ export default abstract class DiskManager {
         await Promise.all(checks);
     };
 
+    /**
+     * Returns the disk data, calculating it if it hasn't
+     * already been calculated.
+     */
     public static getDiskData = async () => {
         if (_.size(DiskManager.diskData) === 0) {
             await DiskManager.calcDiskData();
@@ -44,6 +64,11 @@ export default abstract class DiskManager {
     }
 };
 
-export const bytesToGB = (bytes: number): number => {
-    return Math.round(((bytes / 1e+9) + Number.EPSILON) * 100) / 100;
+/**
+ * Converts bytes to gibibytes
+ * 
+ * @param bytes
+ */
+export const bytesToGiB = (bytes: number): number => {
+    return Math.round(((bytes / 1.074e+9) + Number.EPSILON) * 100) / 100;
 };
