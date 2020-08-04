@@ -37,6 +37,7 @@ export default abstract class DiskManager {
         // Get a list of drives mounted on the system
         // TODO: use a different module to get the disks instead of hardcoded
         // drives
+        // linter test
         const drives = [{
             mounted: 'C:',
         }, {
