@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import disksReducer from './slices/disksSlice';
 
+
 const store = configureStore({
     reducer: {
         disks: disksReducer,

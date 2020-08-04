@@ -12,8 +12,9 @@ import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 // Components
 import DiskInfo from './DiskInfo';
 
-// System
+// Node Modules
 import _ from 'lodash';
+
 
 export default (): ReactElement => {
     const disks = useSelector(selectDisks);
