@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 
 // Material UI
 import { Grid } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 // Components
 import Disks from './Disks';
@@ -11,7 +11,7 @@ import Folder from './FolderChoose';
 import SplitFiles from './SplitFiles';
 
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles(() => 
     createStyles({
         root: {
             flexGrow: 1,
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default (): ReactElement => {
+const Container = (): ReactElement => {
     const classes = useStyles();
     
     return (
@@ -39,3 +39,7 @@ export default (): ReactElement => {
         </div>
     );
 };
+
+Container.displayName = 'Container';
+
+export default Container;

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default (props: DiskData): ReactElement => {
+const DiskInfo = (props: DiskData): ReactElement => {
     const classes = useStyles();
 
     return (
@@ -48,3 +48,7 @@ export default (props: DiskData): ReactElement => {
         </Paper>
     );
 };
+
+DiskInfo.displayName = 'DiskInfo';
+
+export default DiskInfo;

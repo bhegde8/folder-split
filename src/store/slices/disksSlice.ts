@@ -26,12 +26,14 @@ export const disksSlice = createSlice({
 /**
  * Fetches the disk data from the DiskManager
  */
-export const refreshDiskData = (): AppThunk => async (dispatch: AppDispatch) => {
+export const refreshDiskData = (): AppThunk => async (
+    dispatch: AppDispatch
+) => {
     try {
         const data: DiskData[] = await DiskManager.getDiskData();
 
         // Replace the state with the new disk data
-        dispatch(disksSlice.actions.setDisks(await DiskManager.getDiskData()));
+        dispatch(disksSlice.actions.setDisks(data));
     } catch (error) {
         console.error('Failed to refresh disk data', error);
     }

@@ -15,6 +15,15 @@ export type DiskData = {
 };
 
 /**
+ * Converts bytes to gibibytes
+ * 
+ * @param bytes
+ */
+export const bytesToGiB = (bytes: number): number => {
+    return Math.round(((bytes / 1.074e+9) + Number.EPSILON) * 100) / 100;
+};
+
+/**
  * Manages the retrieval of disk information
  */
 export default abstract class DiskManager {
@@ -64,13 +73,4 @@ export default abstract class DiskManager {
 
         return DiskManager.diskData;        
     }
-};
-
-/**
- * Converts bytes to gibibytes
- * 
- * @param bytes
- */
-export const bytesToGiB = (bytes: number): number => {
-    return Math.round(((bytes / 1.074e+9) + Number.EPSILON) * 100) / 100;
-};
+}
