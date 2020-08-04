@@ -1,5 +1,10 @@
 // React
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
+
+// Redux
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../store/store';
+import { selectDisks, refreshDiskData } from '../store/slices/disksSlice';
 
 // Material UI
 import { Card, CardContent, Grid, Typography } from '@material-ui/core';
@@ -7,8 +12,20 @@ import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 // Components
 import DiskInfo from './DiskInfo';
 
+// Node Modules
+import _ from 'lodash';
+
+
 export default (): ReactElement => {
-    
+    const disks = useSelector(selectDisks);
+    const dispatch = useAppDispatch();
+
+    // When this component first loads, do an initial
+    // loading of the disk data
+    useEffect(() => {
+        dispatch(refreshDiskData());
+    }, []);
+
     return (
         <Card>
             <CardContent>
@@ -17,22 +34,9 @@ export default (): ReactElement => {
                 </Typography>
                 <Grid container spacing={1}>
                     {
-                        [{
-                            driveLabel: 'C:',
-                            freeSpace: 40.0,
-                            totalSpace: 237,
-                        },
-                        {
-                            driveLabel: 'D:',
-                            freeSpace: 6.41,
-                            totalSpace: 59.6,
-                        }].map((driveData) => (
+                        _.map(disks, (disk) => (
                             <Grid item xs={2}>
-                                <DiskInfo
-                                    driveLabel={driveData.driveLabel}
-                                    freeSpace={driveData.freeSpace}
-                                    totalSpace={driveData.totalSpace}
-                                />
+                                <DiskInfo {...disk} />
                             </Grid>
                         ))
                     }

@@ -1,5 +1,5 @@
 // Electron
-import { remote } from 'electron'
+import { remote } from 'electron';
 
 // React
 import React, { ReactElement, useState } from 'react';
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: theme.palette.background.default,
         },
         textRight: {
-            textAlign: "right",
+            textAlign: 'right',
         },
     }),
 );

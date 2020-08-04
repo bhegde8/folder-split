@@ -11,6 +11,7 @@ import { blue } from '@material-ui/core/colors';
 // Components
 import Container from './components/Container'
 
+
 const darkMode: Theme = createMuiTheme({
     palette: {
         type: 'dark',
