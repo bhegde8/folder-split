@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch, RootState } from '../store';
 
 // System
-import DiskManager, { DiskData } from '../../system/diskManager';
+import DiskManager, { DiskData } from '../../system/diskmanager';
 
 
 /**

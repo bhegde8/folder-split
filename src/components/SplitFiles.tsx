@@ -1,6 +1,10 @@
 // React
 import React, { ReactElement } from 'react';
 
+// Redux
+import { useSelector } from 'react-redux';
+import { selectDisks } from '../store/slices/disksSlice';
+
 // Material UI
 import { Button, Card, CardContent, Grid, Paper,
          Typography } from '@material-ui/core';
@@ -11,6 +15,9 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 // Components
 import FileTransfer from './filetransfer/FileTransfer';
+
+// Node Modules
+import _ from 'lodash';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SplitFiles = (): ReactElement => {
     const classes = useStyles();
+    const disks = useSelector(selectDisks);
 
     return (
         <Card>
@@ -64,9 +72,9 @@ const SplitFiles = (): ReactElement => {
                 </Grid>
                 <Grid container spacing={1}>
                     {
-                        ['C:', 'D:'].map((driveLabel) => (
-                            <Grid item key={driveLabel} xs={4}>
-                                <FileTransfer driveLabel={driveLabel} />
+                        _.map(disks, (disk) => (
+                            <Grid item key={disk.label} xs={4}>
+                                <FileTransfer driveLabel={disk.label} />
                             </Grid>
                         ))
                     }
