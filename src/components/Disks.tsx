@@ -35,7 +35,7 @@ const Disks = (): ReactElement => {
                 <Grid container spacing={1}>
                     {
                         _.map(disks, (disk) => (
-                            <Grid item xs={2}>
+                            <Grid item key={disk.label} xs={2}>
                                 <DiskInfo {...disk} />
                             </Grid>
                         ))
