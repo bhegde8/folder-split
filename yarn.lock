@@ -1821,13 +1821,6 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-diskusage@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/diskusage/-/diskusage-1.1.3.tgz#680d7dbf1b679168a195c9240eb3552cbd2c067b"
-  dependencies:
-    es6-promise "^4.2.5"
-    nan "^2.14.0"
-
 doctrine@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"
@@ -1933,6 +1926,14 @@ ecc-jsbn@~0.1.1:
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
+
+electron-diskusage@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/electron-diskusage/-/electron-diskusage-1.1.3.tgz#546317de08b1300d61a77b5b6e93e0244800d30f"
+  integrity sha512-5uEzngoLIcIa1deMjeKjbUi42iDDNi8RdjbrhZJV1xtGA45qvrp3JLdhA//8XD2uHgNrQXCD1JhBu25mlf5dZw==
+  dependencies:
+    es6-promise "^4.2.5"
+    nan "^2.14.0"
 
 electron-drivelist@^8.0.10:
   version "8.0.10"
@@ -2161,6 +2162,7 @@ es6-error@^4.1.1:
 es6-promise@^4.2.5:
   version "4.2.8"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
+  integrity sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
 
 escape-html@~1.0.3:
   version "1.0.3"

@@ -1,5 +1,5 @@
 // Node Modules
-import diskusage from 'diskusage';
+import diskusage from 'electron-diskusage';
 import * as drivelist from 'electron-drivelist';
 import _ from 'lodash';
 
