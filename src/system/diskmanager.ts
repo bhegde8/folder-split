@@ -35,37 +35,33 @@ export default abstract class DiskManager {
     public static getDiskData = async () => {
         const diskData: DiskData[] = [];
 
-        try {
-            const driveList = await drivelist.list();
+        // Get a list of drives mounted on this system
+        const driveList = await drivelist.list();
 
-            // Get a list of drives mounted on the system
-            const drives = _.flatMap(driveList, (drive) => {
-                return _.filter(drive.mountpoints, (mountPoint) => {
-                    // Ignore boot and swap partitions on *nix
-                    return  !(_.startsWith(mountPoint.path, '/boot') ||
-                                           mountPoint.path === '[SWAP]')
-                })
+        const drives = _.flatMap(driveList, (drive) => {
+            return _.filter(drive.mountpoints, (mountPoint) => {
+                // Ignore boot and swap partitions on GNU/Linux
+                return  !(_.startsWith(mountPoint.path, '/boot') ||
+                                        mountPoint.path === '[SWAP]')
             })
+        })
 
-            // Build an array of disk usage check promises to await on
-            const checks = _.map(drives, async (drive) => {
-                // Get the available and total space on the drive
-                const data = await diskusage.check(drive.path);
-                
-                // Add the data to the diskData array
-                diskData.push({
-                    label: drive.path,
-                    free: bytesToGiB(data.available),
-                    total: bytesToGiB(data.total),
-                    usage: (data.available / data.total) * 100,
-                });
+        // Build an array of disk usage check promises to await on
+        const checks = _.map(drives, async (drive) => {
+            // Get the available and total space on the drive
+            const data = await diskusage.check(drive.path);
+            
+            // Add the data to the diskData array
+            diskData.push({
+                label: drive.path,
+                free: bytesToGiB(data.available),
+                total: bytesToGiB(data.total),
+                usage: (data.available / data.total) * 100,
             });
+        });
 
-            await Promise.all(checks);
+        await Promise.all(checks);
 
-            return diskData;
-        } catch (error) {
-            throw error;
-        }
+        return diskData;
     };
 }
