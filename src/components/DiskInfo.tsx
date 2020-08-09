@@ -8,7 +8,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import StorageIcon from '@material-ui/icons/Storage';
 
 // System
-import { DiskData } from '../system/diskManager'
+import { DiskData } from '../system/diskmanager';
 
 
 const useStyles = makeStyles((theme: Theme) => 
