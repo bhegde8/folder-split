@@ -5,7 +5,7 @@ import _ from 'lodash';
 import os from 'os';
 
 // System
-import FileSizes from './filesizes';
+import FileSizes, { FileSize } from './filesizes';
 
 /**
  * Models properties of a disk (mount label,
@@ -13,8 +13,8 @@ import FileSizes from './filesizes';
  */
 export type DiskData = {
     label: string;
-    free: number;
-    total: number;
+    free: FileSize;
+    total: FileSize;
     usage: number;
 };
 
@@ -49,12 +49,12 @@ export default class DiskManager {
         const checks = _.map(drives, async (drive) => {
             // Get the available and total space on the drive
             const data = await diskusage.check(drive.path);
-            
+
             // Add the data to the diskData array
             diskData.push({
                 label: drive.path,
-                free: FileSizes.convertBytes(data.available, gbUnit, true),
-                total: FileSizes.convertBytes(data.total, gbUnit, true),
+                free: FileSizes.bytesToSize(data.available, true),
+                total: FileSizes.bytesToSize(data.total, true),
                 usage: (data.available / data.total) * 100,
             });
         });
