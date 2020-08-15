@@ -2,7 +2,10 @@
 import diskusage from 'electron-diskusage';
 import * as drivelist from 'electron-drivelist';
 import _ from 'lodash';
+import os from 'os';
 
+// System
+import FileSizes from './filesizes';
 
 /**
  * Models properties of a disk (mount label,
@@ -16,18 +19,14 @@ export type DiskData = {
 };
 
 /**
- * Converts bytes to gibibytes
- * 
- * @param bytes
+ * Use GiB on Windows but GB elsewhere
  */
-export const bytesToGiB = (bytes: number): number => {
-    return Math.round(((bytes / 1.074e+9) + Number.EPSILON) * 100) / 100;
-};
+const gbUnit: string = (os.platform() === 'win32') ? 'GiB' : 'GB';
 
 /**
  * Manages the retrieval of disk information
  */
-export default abstract class DiskManager {
+export default class DiskManager {
     /**
      * Goes through all the mounted disks 
      * and calculates the disk usage for each one.
@@ -54,8 +53,8 @@ export default abstract class DiskManager {
             // Add the data to the diskData array
             diskData.push({
                 label: drive.path,
-                free: bytesToGiB(data.available),
-                total: bytesToGiB(data.total),
+                free: FileSizes.convertBytes(data.available, gbUnit, true),
+                total: FileSizes.convertBytes(data.total, gbUnit, true),
                 usage: (data.available / data.total) * 100,
             });
         });
