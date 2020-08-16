@@ -43,7 +43,7 @@ export default class FileSizes {
      * @param bytes
      */
     public static convertBytes = (bytes: number, unit: string,
-                             round: boolean): number => {
+                                  round: boolean): number => {
 
         const convertedValue = bytes / FileSizes.bytesTable[unit];
 
