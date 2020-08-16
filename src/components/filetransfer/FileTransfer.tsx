@@ -2,18 +2,19 @@
 import React, { ReactElement } from 'react';
 
 // Material UI
-import { Checkbox, Collapse, List, ListItem, ListItemIcon, ListItemText,
-         ListItemSecondaryAction, ListSubheader } from '@material-ui/core';
+import { List, ListSubheader } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import FileIcon from '@material-ui/icons/InsertDriveFileOutlined';
-import FolderIcon from '@material-ui/icons/Folder';
+// System
+import { File } from '../../system/filemanager';
+
+// Components
+import FolderItem from './FolderItem';
 
 
 type Props = {
     readonly driveLabel: string;
+    readonly rootFile: File;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,19 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
         list: {
             backgroundColor: theme.palette.background.default,
         },
-        nested: {
-            paddingLeft: theme.spacing(4),
-        },
     }),
 );
 
 const FileTransfer = (props: Props): ReactElement => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-
-    const handleClick = () => {
-        setOpen(!open);
-    };
 
     return (
         <List
@@ -51,59 +44,7 @@ const FileTransfer = (props: Props): ReactElement => {
             }
             className={classes.list}
         >
-            <ListItem button>
-                <ListItemIcon>
-                    <FileIcon />
-                </ListItemIcon>
-                <ListItemText primary="mcclauncher.exe" />
-                <ListItemSecondaryAction>
-                    <Checkbox
-                        color="primary"
-                        edge="end"
-                    />
-                </ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-                <ListItemIcon>
-                    <FileIcon />
-                </ListItemIcon>
-                <ListItemText primary="halonetworklayer_ship.dll" />
-                <ListItemSecondaryAction>
-                    <Checkbox
-                        color="primary"
-                        edge="end"
-                    />
-                </ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button onClick={handleClick}>
-                <ListItemIcon>
-                    <FolderIcon />
-                </ListItemIcon>
-                <ListItemText primary="halo3" />
-                {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                <ListItemSecondaryAction>
-                    <Checkbox
-                        color="primary"
-                        edge="end"
-                    />
-                </ListItemSecondaryAction>
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <FileIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="halo3.dll" />
-                        <ListItemSecondaryAction>
-                            <Checkbox
-                                color="primary"
-                                edge="end"
-                            />
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                </List>
-            </Collapse>
+            <FolderItem {...props.rootFile} />
         </List>
     );
 };

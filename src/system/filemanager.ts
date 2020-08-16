@@ -13,6 +13,7 @@ import { DiskData } from './diskmanager';
  */
 export type File = {
     isDirectory: boolean; // whether this is a folder or not
+    depth?: number; // recursion depth level (0+)
     name: string; // the name of the file/folder (not the full path)
     extension?: string; // the file extension (could be used for showing icons)
     size: FileSize; // data about the size of the file/folder
@@ -36,7 +37,8 @@ export default class FileManager {
      * @param filePath 
      * @param drive 
      */
-    private static buildTreeRec = (filePath: string, drive: string): File => {
+    private static buildTreeRec = (filePath: string, drive: string,
+                                   depth: number): File => {
 
         // The base name of the file/folder
         const fileName = path.basename(filePath);
@@ -52,7 +54,7 @@ export default class FileManager {
             const children = _.map(fs.readdirSync(filePath), (child) => {
                 const childPath = path.join(filePath, child);
 
-                return FileManager.buildTreeRec(childPath, drive);
+                return FileManager.buildTreeRec(childPath, drive, depth + 1);
             });
 
             // Remove any null files that might have been returned
@@ -69,6 +71,7 @@ export default class FileManager {
             // Return a File object representing this directory
             return {
                 isDirectory: true,
+                depth,
                 name: fileName,
                 size: totalSize,
                 children,
@@ -80,6 +83,7 @@ export default class FileManager {
             // Return a File object representing this file
             return {
                 isDirectory: false,
+                depth,
                 name: fileName,
                 extension: _.toLower(path.extname(filePath)),
                 size: FileSizes.bytesToSize(fileStats.size, true),
@@ -109,6 +113,6 @@ export default class FileManager {
             return _.startsWith(path, diskData.label);
         }).label;
 
-        return FileManager.buildTreeRec(path, destDrive);
+        return FileManager.buildTreeRec(path, destDrive, 0);
     }
 }
