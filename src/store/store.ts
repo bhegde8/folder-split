@@ -2,11 +2,12 @@
 import { useDispatch } from 'react-redux';
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import disksReducer from './slices/disksSlice';
-
+import treeReducer from './slices/treeSlice';
 
 const store = configureStore({
     reducer: {
         disks: disksReducer,
+        tree: treeReducer,
     },
 });
 

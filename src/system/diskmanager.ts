@@ -2,10 +2,10 @@
 import diskusage from 'electron-diskusage';
 import * as drivelist from 'electron-drivelist';
 import _ from 'lodash';
-import os from 'os';
 
 // System
 import FileSizes, { FileSize } from './filesizes';
+
 
 /**
  * Models properties of a disk (mount label,
@@ -17,11 +17,6 @@ export type DiskData = {
     total: FileSize;
     usage: number;
 };
-
-/**
- * Use GiB on Windows but GB elsewhere
- */
-const gbUnit: string = (os.platform() === 'win32') ? 'GiB' : 'GB';
 
 /**
  * Manages the retrieval of disk information

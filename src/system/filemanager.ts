@@ -1,6 +1,7 @@
 // Node Modules
 import fs from 'fs';
 import _ from 'lodash';
+import os from 'os';
 import path from 'path';
 
 // System
@@ -109,10 +110,23 @@ export default class FileManager {
      */
     public static buildTree = (path: string, disksData: DiskData[]): File => {
         // Find the drive label that the files currently sit on
-        const destDrive = _.find(disksData, (diskData) => {
-            return _.startsWith(path, diskData.label);
-        }).label;
+        let destDrive = '';
 
-        return FileManager.buildTreeRec(path, destDrive, 0);
+        _.forEach(disksData, (diskData) => {
+            if (_.startsWith(path, diskData.label)) {
+                // Unless we are on Windows, we need to assume that the longest
+                // matching drive label is the correct one
+                // (e.g. a file on /mnt/sdcard should not be considered to be
+                // on /, even though both paths start with /)
+                if (os.platform() === 'win32') {
+                    destDrive = diskData.label;
+                    return false;
+                } else if (diskData.label.length > destDrive.length) {
+                    destDrive = diskData.label;
+                }
+            }
+        })
+
+        return FileManager.buildTreeRec(path, destDrive, 1);
     }
 }
