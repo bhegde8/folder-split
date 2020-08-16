@@ -2,7 +2,13 @@
 import { remote } from 'electron';
 
 // React
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
+
+// Redux
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../store/store';
+import { selectDisks } from '../store/slices/disksSlice';
+import { selectRootPath, changeDirectory } from '../store/slices/treeSlice';
 
 // Material UI
 import { Card, CardContent, Button, Grid, Paper,
@@ -29,7 +35,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const FolderChoose = (): ReactElement => {
     const classes = useStyles();
-    const [folder, setFolder] = useState('(No Folder Selected)');
+
+    const disks = useSelector(selectDisks);
+    const folder = useSelector(selectRootPath);
+    const dispatch = useAppDispatch();
 
     const openFolderDialog = async () => {
         const result = await remote.dialog.showOpenDialog({
@@ -37,7 +46,7 @@ const FolderChoose = (): ReactElement => {
         });
 
         if (!result.canceled) {
-            setFolder(result.filePaths[0]);
+            dispatch(changeDirectory(result.filePaths[0], disks));
         }
     }
 

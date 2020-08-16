@@ -1,6 +1,7 @@
 // Node Modules
 import fs from 'fs';
 import _ from 'lodash';
+import os from 'os';
 import path from 'path';
 
 // System
@@ -13,6 +14,7 @@ import { DiskData } from './diskmanager';
  */
 export type File = {
     isDirectory: boolean; // whether this is a folder or not
+    depth?: number; // recursion depth level (0+)
     name: string; // the name of the file/folder (not the full path)
     extension?: string; // the file extension (could be used for showing icons)
     size: FileSize; // data about the size of the file/folder
@@ -36,7 +38,8 @@ export default class FileManager {
      * @param filePath 
      * @param drive 
      */
-    private static buildTreeRec = (filePath: string, drive: string): File => {
+    private static buildTreeRec = (filePath: string, drive: string,
+                                   depth: number): File => {
 
         // The base name of the file/folder
         const fileName = path.basename(filePath);
@@ -52,7 +55,7 @@ export default class FileManager {
             const children = _.map(fs.readdirSync(filePath), (child) => {
                 const childPath = path.join(filePath, child);
 
-                return FileManager.buildTreeRec(childPath, drive);
+                return FileManager.buildTreeRec(childPath, drive, depth + 1);
             });
 
             // Remove any null files that might have been returned
@@ -69,6 +72,7 @@ export default class FileManager {
             // Return a File object representing this directory
             return {
                 isDirectory: true,
+                depth,
                 name: fileName,
                 size: totalSize,
                 children,
@@ -80,6 +84,7 @@ export default class FileManager {
             // Return a File object representing this file
             return {
                 isDirectory: false,
+                depth,
                 name: fileName,
                 extension: _.toLower(path.extname(filePath)),
                 size: FileSizes.bytesToSize(fileStats.size, true),
@@ -105,10 +110,23 @@ export default class FileManager {
      */
     public static buildTree = (path: string, disksData: DiskData[]): File => {
         // Find the drive label that the files currently sit on
-        const destDrive = _.find(disksData, (diskData) => {
-            return _.startsWith(path, diskData.label);
-        }).label;
+        let destDrive = '';
 
-        return FileManager.buildTreeRec(path, destDrive);
+        _.forEach(disksData, (diskData) => {
+            if (_.startsWith(path, diskData.label)) {
+                // Unless we are on Windows, we need to assume that the longest
+                // matching drive label is the correct one
+                // (e.g. a file on /mnt/sdcard should not be considered to be
+                // on /, even though both paths start with /)
+                if (os.platform() === 'win32') {
+                    destDrive = diskData.label;
+                    return false;
+                } else if (diskData.label.length > destDrive.length) {
+                    destDrive = diskData.label;
+                }
+            }
+        })
+
+        return FileManager.buildTreeRec(path, destDrive, 1);
     }
 }

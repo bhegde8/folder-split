@@ -4,6 +4,7 @@ import React, { ReactElement } from 'react';
 // Redux
 import { useSelector } from 'react-redux';
 import { selectDisks } from '../store/slices/disksSlice';
+import { selectTree } from '../store/slices/treeSlice';
 
 // Material UI
 import { Button, Card, CardContent, Grid, Paper,
@@ -34,7 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SplitFiles = (): ReactElement => {
     const classes = useStyles();
+
     const disks = useSelector(selectDisks);
+    const tree = useSelector(selectTree);
 
     return (
         <Card>
@@ -73,8 +76,11 @@ const SplitFiles = (): ReactElement => {
                 <Grid container spacing={1}>
                     {
                         _.map(disks, (disk) => (
-                            <Grid item key={disk.label} xs={4}>
-                                <FileTransfer driveLabel={disk.label} />
+                            <Grid item key={disk.label} xs={12}>
+                                <FileTransfer
+                                    driveLabel={disk.label}
+                                    rootFile={tree}
+                                />
                             </Grid>
                         ))
                     }
