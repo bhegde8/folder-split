@@ -41,7 +41,8 @@ const DiskInfo = (props: DiskData): ReactElement => {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography variant="body1" component="p">
-                        {props.free} / {props.total} GiB Free
+                        {props.free.val} / {props.total.val} {props.free.unit}
+                        &nbsp; Free
                     </Typography>
                 </Grid>
             </Grid>
