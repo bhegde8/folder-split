@@ -75,14 +75,14 @@ const SplitFiles = (): ReactElement => {
                 </Grid>
                 <Grid container spacing={1}>
                     {
-                        _.map(disks, (disk) => (
+                        (tree) ? _.map(disks, (disk) => (
                             <Grid item key={disk.label} xs={12}>
                                 <FileTransfer
                                     driveLabel={disk.label}
                                     rootFile={tree}
                                 />
                             </Grid>
-                        ))
+                        )) : <div></div>
                     }
                 </Grid>
             </CardContent>

@@ -36,7 +36,10 @@ const FolderItem = (props: File): ReactElement => {
                 <ListItemIcon>
                     <FolderIcon />
                 </ListItemIcon>
-                <ListItemText primary={props.name} />
+                <ListItemText
+                    primary={props.name}
+                    secondary={`${props.size.val} ${props.size.unit}`}
+                />
                 {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 <ListItemSecondaryAction>
                     <Checkbox

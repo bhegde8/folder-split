@@ -17,7 +17,10 @@ const FileItem = (props: File): ReactElement => {
             <ListItemIcon>
                 <FileIcon />
             </ListItemIcon>
-            <ListItemText primary={props.name} />
+            <ListItemText
+                primary={props.name}
+                secondary={`${props.size.val} ${props.size.unit}`}
+            />
             <ListItemSecondaryAction>
                 <Checkbox
                     color="primary"
